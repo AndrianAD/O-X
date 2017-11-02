@@ -4,41 +4,25 @@ import java.util.Random;
 
 
 public class Test {
-    public static int size = 4;
-    public static int chek_win = 3;
+    public static int size = 6;
+    public static int chek_win = 5;
 
-//        public static int mas[][] = {{1,1,0,0}, {1,0,1,0},{0,1,0,1},{1,0,1,0}};
+    //        public static int mas[][] = {{0,0,0,0}, {0,0,1,0},{0,1,0,0},{1,0,0,0}};
     public static int mas[][] = newArray();
 
 
 
     public static void main(String[] args) {
         Test test = new Test();
+        int cout = 0;
 
-        test.random_chose(mas);
-        test.chek_win(mas);
-        test.random_chose(mas);
-        test.chek_win(mas);
-        test.random_chose(mas);
-        test.chek_win(mas);
-        test.random_chose(mas);
-        test.chek_win(mas);
-        test.random_chose(mas);
-        test.chek_win(mas);
+        for (int i = 0; i < 25; i++) {
+            test.random_chose(mas);
+            test.chek_win(mas);
+            cout++;
+        }
+        System.out.println(cout);
 
-        test.random_chose(mas);
-        test.chek_win(mas);
-
-        test.random_chose(mas);
-        test.chek_win(mas);
-        test.random_chose(mas);
-        test.chek_win(mas);
-
-        test.random_chose(mas);
-        test.chek_win(mas);
-
-        test.random_chose(mas);
-        test.chek_win(mas);
 
 
 
@@ -73,32 +57,41 @@ public class Test {
     }
 
     private boolean chek_rigth(int i, int j) {
-
-        if (((j + size - 1) >= size)) {
+        if (((j + chek_win) > size)) {
             return false;
-        } else if (mas[i][j + 1] == 1 && mas[i][j + 2] == 1) {
+        }
+        int temp = chek_win - 1;
+        while (temp > 0) {
+            if (mas[i][j + temp] == 1) {
+                temp--;
+            } else break;
+
+        }
+        if (temp == 0) {
             System.out.println("совпадение по горизонтали");
             return true;
-        } else
+        }
             return false;
-
     }
+
 
 
     private boolean chek_down(int i, int j) {
         if (((i + size - 1) >= size)) {
             return false;
         }
+        int temp = chek_win - 1;
+        while (temp > 0) {
+            if (mas[i + temp][j] == 1) {
+                temp--;
+            } else break;
 
-
-
-        else if (mas[i+1][j]==1 && mas[i+2][j]==1)
-        {
+        }
+        if (temp == 0) {
             System.out.println("совпадение по вертикали");
-            return true;}
-
-        else
-            return false;
+            return true;
+        }
+        return false;
 
     }
 
@@ -106,7 +99,7 @@ public class Test {
     private boolean chek_diagonal_right(int i, int j) {
         int temp = chek_win - 1;
 
-        if (((j + size - 1) > size)) {
+        if (((j + size - 1) >= size)) {
             return false;
         }
 
@@ -118,12 +111,11 @@ public class Test {
         while (temp > 0) {
             if (mas[i + temp][j + temp] == 1) {
                 temp--;
-                System.out.println("temp--");
             } else break;
 
         }
         if (temp == 0) {
-            System.out.println("совпадение по диагонали");
+            System.out.println("совпадение по диагонали в право");
         }
 
         return false;
@@ -132,12 +124,11 @@ public class Test {
 
     private boolean chek_diagonal_left(int i, int j) {
         int temp = chek_win- 1;
-
-        if (((j - size - 1) <0)) {
+// chek left border
+        if (j + 1 - chek_win < 0)
             return false;
-        }
-
-        if (((i - size - 1) < 0)) {
+//    chek down border
+        if (((i + size - 1) >= size)) {
             return false;
         }
 
@@ -145,12 +136,11 @@ public class Test {
         while (temp > 0) {
             if (mas[i + temp][j - temp] == 1) {
                 temp--;
-                System.out.println("temp--");
             } else break;
 
         }
         if (temp == 0) {
-            System.out.println("совпадение по диагонали");
+            System.out.println("совпадение по диагонали в лево");
         }
 
         return false;
@@ -201,7 +191,7 @@ public class Test {
     public void printArray(int masiv[][]) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                System.out.print(mas[i][j]);
+                System.out.print(mas[i][j] + " ");
             }
             System.out.println();
         }
