@@ -1,34 +1,35 @@
 import java.util.Random;
-public class Demo {
+
+public class Logic {
     public static int size = 3;     // size of field
-    public static int chek_win = 3; // number of points to win
+
 
     //        public static int mas[][] = {{0,0,0,0}, {0,0,1,0},{0,1,0,0},{1,0,0,0}};
     public static int mas[][] = newArray();
 
     // chek if game is over
-    public void chek_win(int[][] masiv) {
+    public void chek_win(int[][] masiv, int number_to_chek, int chek_win) {
         for (int i = 0; i < masiv.length; i++) {
             for (int j = 0; j < masiv.length; j++) {
 
-                if (masiv[i][j] == 1) {
-                    chek_rigth(i, j);
-                    chek_down(i, j);
-                    chek_diagonal_right(i, j);
-                    chek_diagonal_left(i, j);
+                if (masiv[i][j] == number_to_chek) {
+                    chek_rigth(i, j, number_to_chek, chek_win);
+                    chek_down(i, j, number_to_chek, chek_win);
+                    chek_diagonal_right(i, j, number_to_chek, chek_win);
+                    chek_diagonal_left(i, j, number_to_chek, chek_win);
                 }
             }
         }
     }
 
     // check matching horizontaly
-    private boolean chek_rigth(int i, int j) {
+    private boolean chek_rigth(int i, int j, int number_chek, int chek_win) {
         if (((j + chek_win) > size)) {
             return false;
         }
         int temp = chek_win - 1;
         while (temp > 0) {
-            if (mas[i][j + temp] == 1) {
+            if (mas[i][j + temp] == number_chek) {
                 temp--;
             } else break;
 
@@ -42,13 +43,13 @@ public class Demo {
 
 
     // check matching vertically
-    private boolean chek_down(int i, int j) {
+    private boolean chek_down(int i, int j, int number_chek, int chek_win) {
         if (((i + size - 1) >= size)) {
             return false;
         }
         int temp = chek_win - 1;
         while (temp > 0) {
-            if (mas[i + temp][j] == 1) {
+            if (mas[i + temp][j] == number_chek) {
                 temp--;
             } else break;
 
@@ -62,7 +63,7 @@ public class Demo {
     }
 
     // check matching diagonal on the right
-    private boolean chek_diagonal_right(int i, int j) {
+    private boolean chek_diagonal_right(int i, int j, int number_chek, int chek_win) {
         int temp = chek_win - 1;
 
         if (((j + size - 1) >= size)) {
@@ -75,7 +76,7 @@ public class Demo {
 
 
         while (temp > 0) {
-            if (mas[i + temp][j + temp] == 1) {
+            if (mas[i + temp][j + temp] == number_chek) {
                 temp--;
             } else break;
 
@@ -88,7 +89,7 @@ public class Demo {
     }
 
     // check matching diagonal on the left
-    private boolean chek_diagonal_left(int i, int j) {
+    private boolean chek_diagonal_left(int i, int j, int number_chek, int chek_win) {
         int temp = chek_win - 1;
 // check left border
         if (j + 1 - chek_win < 0)
@@ -98,7 +99,7 @@ public class Demo {
             return false;
         }
         while (temp > 0) {
-            if (mas[i + temp][j - temp] == 1) {
+            if (mas[i + temp][j - temp] == number_chek) {
                 temp--;
             } else break;
 
