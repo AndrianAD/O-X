@@ -1,34 +1,38 @@
 import java.util.Random;
 public class Demo {
     public static int size = 3;     // size of field
-    public static int chek_win = 3; // number of points to win
 
-    //        public static int mas[][] = {{0,0,0,0}, {0,0,1,0},{0,1,0,0},{1,0,0,0}};
-    public static int mas[][] = newArray();
+    public static int mas[][] = {{0, 0, 0,}, {0, 0, 0,}, {0, 0, 0}};
+//    public static int mas[][] = newArray();
 
     // chek if game is over
-    public void chek_win(int[][] masiv) {
+    public boolean chek_win(int[][] masiv, int to_chek, int size_to_chek) {
         for (int i = 0; i < masiv.length; i++) {
             for (int j = 0; j < masiv.length; j++) {
 
-                if (masiv[i][j] == 1) {
-                    chek_rigth(i, j);
-                    chek_down(i, j);
-                    chek_diagonal_right(i, j);
-                    chek_diagonal_left(i, j);
+                if (masiv[i][j] == to_chek) {
+                    if (chek_rigth(i, j, to_chek, size_to_chek))
+                        return true;
+                    if (chek_down(i, j, to_chek, size_to_chek))
+                        return true;
+                    if (chek_diagonal_right(i, j, to_chek, size_to_chek))
+                        return true;
+                    if (chek_diagonal_left(i, j, to_chek, size_to_chek))
+                        return true;
                 }
             }
         }
+        return false;
     }
 
     // check matching horizontaly
-    private boolean chek_rigth(int i, int j) {
-        if (((j + chek_win) > size)) {
+    private boolean chek_rigth(int i, int j, int to_chek, int size_to_chek) {
+        if (((j + size_to_chek >= size))) {
             return false;
         }
-        int temp = chek_win - 1;
+        int temp = size_to_chek - 1;
         while (temp > 0) {
-            if (mas[i][j + temp] == 1) {
+            if (mas[i][j + temp] == to_chek) {
                 temp--;
             } else break;
 
@@ -42,13 +46,13 @@ public class Demo {
 
 
     // check matching vertically
-    private boolean chek_down(int i, int j) {
+    private boolean chek_down(int i, int j, int to_chek, int size_to_chek) {
         if (((i + size - 1) >= size)) {
             return false;
         }
-        int temp = chek_win - 1;
+        int temp = size_to_chek - 1;
         while (temp > 0) {
-            if (mas[i + temp][j] == 1) {
+            if (mas[i + temp][j] == to_chek) {
                 temp--;
             } else break;
 
@@ -62,8 +66,8 @@ public class Demo {
     }
 
     // check matching diagonal on the right
-    private boolean chek_diagonal_right(int i, int j) {
-        int temp = chek_win - 1;
+    private boolean chek_diagonal_right(int i, int j, int to_chek, int size_to_chek) {
+        int temp = size_to_chek - 1;
 
         if (((j + size - 1) >= size)) {
             return false;
@@ -75,36 +79,40 @@ public class Demo {
 
 
         while (temp > 0) {
-            if (mas[i + temp][j + temp] == 1) {
+            if (mas[i + temp][j + temp] == to_chek) {
                 temp--;
             } else break;
 
         }
         if (temp == 0) {
             System.out.println("совпадение по диагонали в право");
+            return true;
+
+
         }
 
         return false;
     }
 
     // check matching diagonal on the left
-    private boolean chek_diagonal_left(int i, int j) {
-        int temp = chek_win - 1;
+    private boolean chek_diagonal_left(int i, int j, int to_chek, int size_to_chek) {
+        int temp = size_to_chek - 1;
 // check left border
-        if (j + 1 - chek_win < 0)
+        if (j + 1 - size_to_chek < 0)
             return false;
 //    check down border
-        if (((i + size - 1) >= size)) {
+        if (((i + size_to_chek - 1) >= size)) {
             return false;
         }
         while (temp > 0) {
-            if (mas[i + temp][j - temp] == 1) {
+            if (mas[i + temp][j - temp] == to_chek) {
                 temp--;
             } else break;
 
         }
         if (temp == 0) {
             System.out.println("совпадение по диагонали в лево");
+            return true;
         }
         return false;
     }
@@ -125,7 +133,6 @@ public class Demo {
     // put in Array a random one 1
     public void random_chose(int[][] masiv) {
         System.out.println("------------------------------------");
-        ;
         boolean chek = false;
 
         while (chek != true) {
